@@ -14,7 +14,7 @@ class CartonEnv():
         num_actions (int): number of eggs to take out at each time step
         (rows * cols must be divisible by num_actions)
 
-        Each egg is associated with an egg_id and (x, y) position
+        Each egg is associated with an egg_id ie (x, y) position
     '''
 
     def __init__(self, rows=2, cols=6, num_actions=3):
@@ -40,10 +40,9 @@ class CartonEnv():
         # Each action is to remove a egg(s)
         self.action_space = map(tuple, list(itertools.product(self.x_position, self.y_position)))
         self.action_space = list(self.action_space)
-        self.egg_ids = np.arange(len(self.action_space))
 
         # Keep track of which eggs were removed
-        # removed_eggs[egg_id] = 0 or 1
+        # removed_eggs[(x, y)] = 0 or 1
         self.removed_eggs = defaultdict(lambda: 0)
 
 
@@ -70,8 +69,10 @@ class CartonEnv():
         old_com = self.current_com
 
         if self._is_valid_action(action):
+            print('hi', action)
             for egg_id in action:
-                x, y = self.action_space[egg_id]
+                # x, y = self.action_space[egg_id]
+                x, y = egg_id
                 self.current_carton[x, y] = 0
             self.current_com = self.calc_com()
 
