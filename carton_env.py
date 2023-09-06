@@ -51,11 +51,13 @@ class CartonEnv():
         # Let eggs have mass = 1
         total_mass = np.sum(self.current_carton)
 
-        com_x = np.sum(self.current_carton * self.x_position) / total_mass
-        com_y = np.sum(self.current_carton.T * self.y_position) / total_mass
-
-        return np.array([com_x, com_y])
-    
+        if total_mass != 0:
+            com_x = np.sum(self.current_carton * self.x_position) / total_mass
+            com_y = np.sum(self.current_carton.T * self.y_position) / total_mass
+            return np.array([com_x, com_y])
+        
+        else:
+            return np.array((self.cols - 1)/2, (self.rows - 1)/2)
 
     def reset(self):
         self.current_carton = np.ones((self.rows, self.cols))
