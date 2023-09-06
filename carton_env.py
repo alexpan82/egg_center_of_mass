@@ -57,7 +57,7 @@ class CartonEnv():
             return np.array([com_x, com_y])
         
         else:
-            return np.array((self.cols - 1)/2, (self.rows - 1)/2)
+            return np.array([(self.cols - 1)/2, (self.rows - 1)/2])
 
     def reset(self):
         self.current_carton = np.ones((self.rows, self.cols))
