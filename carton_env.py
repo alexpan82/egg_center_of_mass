@@ -62,6 +62,7 @@ class CartonEnv():
         self.current_carton = np.ones((self.rows, self.cols))
         self.current_com = self.calc_com()
         self.removed_eggs = defaultdict(lambda: 0)
+        return self.current_carton
 
 
     def step(self, action):
