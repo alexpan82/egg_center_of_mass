@@ -3,6 +3,7 @@ from collections import defaultdict
 from carton_env import CartonEnv
 from math import comb
 from itertools import combinations
+from tqdm import tqdm
 
 
 class EggAgent():
@@ -23,7 +24,7 @@ class EggAgent():
         self.alpha = 0.34
         self.gamma = 0.9
         self.epsilon = 0.18
-        self.n_episodes = 300000
+        self.n_episodes = 10000
 
         # Initialize environment and rand seed
         self.env = CartonEnv(rows=rows, cols=cols, num_actions=num_actions)
@@ -44,7 +45,7 @@ class EggAgent():
         '''
         
         # Implement Q-learning
-        for _ in range(self.n_episodes):
+        for _ in tqdm(range(self.n_episodes)):
             state = self.env.reset()
             state = tuple(state.flatten())
 
