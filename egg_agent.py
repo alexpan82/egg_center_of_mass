@@ -32,7 +32,7 @@ class EggAgent():
         # Q[state][action(s)] = value
         # Each action_id is a tuple of egg_ids
         # Therefore there are num_eggs choose num_actions possible actions
-        self.actions = combinations(self.env.action_space, num_actions)
+        self.actions = list(combinations(self.env.action_space, num_actions))
         self.total_actions = len(self.actions)
         self.Q = defaultdict(lambda: np.zeros(self.total_actions))
 
@@ -46,6 +46,9 @@ class EggAgent():
         # Implement Q-learning
         for _ in range(self.n_episodes):
             state = self.env.reset()
+            state = tuple(state.flatten())
+
+            done = False
             while done is False:
                 # Choose action using policy derived from Q (epsilon-greedy)
                 rand = np.random.random_sample()
@@ -58,7 +61,8 @@ class EggAgent():
                 # Take action and observe R, S'
                 action = self.actions[action_id]
                 state_next, reward, done = self.env.step(action)
-                
+                state_next = tuple(state_next.flatten())
+
                 # Update Q
                 max_Q = np.amax(self.Q[state_next])
                 td_error = reward + (self.gamma * max_Q) - self.Q[state][action_id]
