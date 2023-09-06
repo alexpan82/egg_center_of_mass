@@ -69,11 +69,9 @@ class CartonEnv():
         old_com = self.current_com
 
         if self._is_valid_action(action):
-            print('hi', action)
             for egg_id in action:
-                # x, y = self.action_space[egg_id]
                 x, y = egg_id
-                self.current_carton[x, y] = 0
+                self.current_carton[y, x] = 0
             self.current_com = self.calc_com()
 
         # Done if all eggs are removed
